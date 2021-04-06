@@ -6,7 +6,7 @@
   <div class="collapse navbar-collapse" id="navbarColor02">
      <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
-           <a class="nav-link">Add Employee <span class="sr-only">(current)</span></a>
+           <a class="nav-link" (click)="onOpenModal(null,'add')">Add Employee <span class="sr-only">(current)</span></a>
         </li>
      </ul>
      <form class="form-inline my-2 my-lg-0">
@@ -17,7 +17,7 @@
 
 
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
-<div class="container">
+<div class="container" id="main-container">
     <div class="row">
         <div *ngFor="let employee of employees" class="col-md-6 col-xl-3">
             <div class="card m-b-30">
@@ -26,19 +26,19 @@
                         <a href=""><img src="{{employee.profileImage?.url}}" alt="" class="img-fluid rounded-circle w-60"></a>
                     </div>
                     <div class="col-6 card-title align-self-center mb-0">
-                        <h5>{{employee.firstName}}</h5>
-                        <h4>{{employee.lastName}}</h4>
-                        <p class="m-0">{{employee.department.departmentName}}</p>
+                        <h5>{{employee?.firstName}}</h5>
+                        <h4>{{employee?.lastName}}</h4>
+                        <p class="m-0">{{employee?.department?.departmentName}}</p>
                     </div>
                 </div>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item"><i class="fa fa-envelope float-right"></i>Email : <a href="#">{{employee.email}}</a></li>
-                    <li class="list-group-item"><i class="fa fa-phone float-right"></i>Phone : {{employee.phone}}</li>
+                    <li class="list-group-item"><i class="fa fa-envelope float-right"></i>Email : <br><a href="#">{{employee?.email}}</a></li>
+                    <li class="list-group-item"><i class="fa fa-phone float-right"></i>Phone : {{employee?.phone}}</li>
                 </ul>
                 <div class="card-body">
                     <div class="float-right btn-group btn-group-sm">
-                        <a href="#" class="btn btn-primary tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Edit"><i class="fa fa-pencil"></i> </a>
-                        <a href="#" class="btn btn-secondary tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Delete"><i class="fa fa-times"></i></a>
+                        <a (click)="onOpenModal(employee,'edit')" href="#" class="btn btn-primary tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Edit"><i class="fa fa-pencil"></i> </a>
+                        <a (click)="onOpenModal(employee,'delete')" href="#" class="btn btn-secondary tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Delete"><i class="fa fa-times"></i></a>
                     </div>
                     <ul class="social-links list-inline mb-0">
                         <li class="list-inline-item"><a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href="" data-original-title="Facebook"><i class="fa fa-facebook-f"></i></a></li>
@@ -50,3 +50,54 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="addEmployeeModal" tabindex="-1" role="dialog" aria-labelledby="addEmployeeModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h5 class="modal-title" id="addEmployeeModalLabel">Add Employee</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+         </div>
+         <div class="modal-body">
+            <form #addForm="ngForm" (ngSubmit)="onAddEmployee(addForm)">
+            <div class="form-group">
+               <label for="firstName">First Name:</label>
+               <input type="text" ngModel name="firstName" class="form-control" id="firstName" placeholder="First Name" required>
+            </div>
+            <div class="form-group">
+               <label for="lastName">Last Name</label>
+               <input type="text" ngModel name="lastName" class="form-control" id="lastName" placeholder="Last Name" required>
+            </div>
+            <div class="form-group">
+               <label for="age">Age</label>
+               <input type="text" ngModel name="age" class="form-control" id="age" placeholder="Age" required>
+            </div>
+            <div class="form-group">
+               <label for="salary">Salary</label>
+               <input type="text" ngModel name="salary" class="form-control" id="salary" placeholder="Salary" required>
+            </div>
+            <div class="form-group">
+               <label for="phone">Phone</label>
+               <input type="text" ngModel name="phone" class="form-control" id="phone" placeholder="Phone" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="text" ngModel name="email" class="form-control" id="email" placeholder="E-mail" required>
+             </div>
+            <div class="modal-footer">
+               <button type="button" id="add-employee-form" class="btn btn-secondary" data-dismiss="modal">Close</button>
+               <button [disabled]="addForm.invalid" type="submit" class="btn btn-primary" >Save changes</button>
+            </div>
+            </form>
+         </div>
+      </div>
+    </div>
+</div>
+
+
+
+
+
+      
