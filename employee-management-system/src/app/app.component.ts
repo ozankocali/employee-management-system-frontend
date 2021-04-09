@@ -1,6 +1,8 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Department } from './department';
+import { DepartmentService } from './department.service';
 import {Employee} from './employee';
 import {EmployeeService} from './employee.service';
 @Component({
@@ -11,13 +13,17 @@ import {EmployeeService} from './employee.service';
 export class AppComponent implements OnInit{
 
   public employees:Employee[];
+  public departments:Department[];
   public editEmployee:Employee;
   public deleteEmployee:Employee;
+  public department:Department;
 
-  constructor(private employeeService: EmployeeService) { }
+  constructor(private employeeService: EmployeeService,
+              private departmentService:DepartmentService) { }
 
   ngOnInit(){
     this.getEmployees();
+    this.getDepartments();
   }
 
 
@@ -33,6 +39,19 @@ export class AppComponent implements OnInit{
     );
 
   }
+
+  public getDepartments():void{
+    
+    this.departmentService.getDepartments().subscribe((response:Department[])=>{
+      this.departments=response;
+      console.log(response);
+    },
+    (error:HttpErrorResponse)=>{
+      alert(error.message);
+    }
+    );
+  }
+
 
   public onOpenModal(employee:Employee,mode:string):void{
 
