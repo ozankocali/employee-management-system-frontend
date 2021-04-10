@@ -10,6 +10,10 @@
             <a class="nav-link" (click)="onOpenModal(null,'add')">Add Employee <span
                   class="sr-only">(current)</span></a>
          </li>
+         <li class="nav-item active">
+            <a class="nav-link" (click)="onOpenDepartmentModal(null,'add')">Add department <span
+                  class="sr-only">(current)</span></a>
+         </li>
       </ul>
       <form class="form-inline my-2 my-lg-0">
          <input type="search" (ngModelChange)="searchEmployee(key.value)" #key="ngModel" ngModel name="key"
@@ -20,7 +24,7 @@
 
 
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
-<div class="container" id="main-container">
+<div class="container" id="employee-container" style="display: none;">
    <div class="row">
       <div *ngFor="let employee of employees" class="col-md-6 col-xl-3">
          <div class="card m-b-30">
@@ -207,5 +211,132 @@
    <div class="alert alert-info" role="alert">
       <h4 class="alert-heading">NO EMPLOYEES!</h4>
       <p>No Employees were found.</p>
+   </div>
+</div>
+
+
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<div class="container" id="department-container">
+    <div class="row">
+        <div *ngFor="let department of departments" class="col-md-6 col-xl-3">
+            <div class="card m-b-30">
+                <div class="card-body row">
+                    
+                    <div class="col-6 card-title align-self-center mb-0">
+                        <h5>{{department.departmentName}}</h5>
+                        <p class="m-0">Graphics Designer</p>
+                    </div>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><i class="fa fa-money float-right"></i>Max-Min Salary: <div><a>${{department?.minSalary}}-${{department?.maxSalary}}</a></div></li>
+                    <li class="list-group-item"><i class="fa fa-user float-right"></i>number of employees</li>
+                </ul>
+                <div class="card-body">
+                    <div class="float-center btn-group btn-group-sm">
+                        <a (click)="onOpenDepartmentModal(department,'edit')" href="#" class="btn btn-primary tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Edit"><i class="fa fa-pencil"></i> </a>
+                        <a (click)="onOpenDepartmentModal(department,'delete')" href="#" class="btn btn-secondary tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Delete"><i class="fa fa-times"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="addDepartmentModal" tabindex="-1" role="dialog" aria-labelledby="addDepartmentModalLabel"
+   aria-hidden="true">
+   <div class="modal-dialog" role="document">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h5 class="modal-title" id="addDepartmentModalLabel">Add Department</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+            </button>
+         </div>
+         <div class="modal-body">
+            <form #addDepartmentForm="ngForm" (ngSubmit)="onAddDepartment(addDepartmentForm)">
+               <div class="form-group">
+                  <label for="departmentName">Department Name:</label>
+                  <input type="text" ngModel name="departmentName" class="form-control" id="departmentName"
+                     placeholder="Department Name" required>
+               </div>
+               <div class="form-group">
+                  <label for="maxSalary">Max Salary:</label>
+                  <input type="text" ngModel name="maxSalary" class="form-control" id="maxSalary" placeholder="Max Salary"
+                     required>
+               </div>
+
+               <div class="form-group">
+                  <label for="minSalary">Min Salary:</label>
+                  <input type="text" ngModel name="minSalary" class="form-control" id="minSalary" placeholder="Min Salary"
+                     required>
+               </div>
+               <div class="modal-footer">
+                  <button type="button" id="add-department-form" class="btn btn-secondary"
+                     data-dismiss="modal">Close</button>
+                  <button [disabled]="addDepartmentForm.invalid" type="submit" class="btn btn-primary">Save changes</button>
+               </div>
+            </form>
+         </div>
+      </div>
+   </div>
+</div>
+
+<div class="modal fade" id="updateDepartmentModal" tabindex="-1" role="dialog" aria-labelledby="departmentEditModalLabel"
+   aria-hidden="true">
+   <div class="modal-dialog" role="document">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h5 class="modal-title" id="updateDepartmentModalLabel">Edit Department {{editDepartment?.departmentName}}</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+            </button>
+         </div>
+         <div class="modal-body">
+            <form #editDepartmentForm="ngForm">
+               <div class="form-group">
+                  <label for="departmentName">Department Name</label>
+                  <input type="text" ngModel="{{editDepartment?.departmentName}}" name="departmentName" class="form-control"
+                     id="departmentName" aria-describedby="emailHelp" placeholder="Department Name">
+               </div>
+               <div class="form-group">
+                  <label for="maxSalary">Max Salary</label>
+                  <input type="text" ngModel="{{editDepartment?.maxSalary}}" name="maxSalary" class="form-control"
+                     id="maxSalary" placeholder="Max Salary">
+               </div>
+               <div class="form-group">
+                  <label for="minSalary">Min Salary</label>
+                  <input type="text" ngModel="{{editDepartment?.minSalary}}" name="minSalary" class="form-control" id="minSalary"
+                     placeholder="Min Salary">
+               </div>
+               <div class="modal-footer">
+                  <button type="button" id="" data-dismiss="modal" class="btn btn-secondary">Close</button>
+                  <button (click)="onUpdateDepartment(editDepartmentForm.value)" data-dismiss="modal" class="btn btn-primary">Save
+                     changes</button>
+               </div>
+            </form>
+         </div>
+      </div>
+   </div>
+</div>
+
+<div class="modal fade" id="deleteDepartmentModal" tabindex="-1" role="dialog" aria-labelledby="deleteDepartmentModelLabel"
+   aria-hidden="true">
+   <div class="modal-dialog" role="document">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h5 class="modal-title" id="deleteDepartmentModelLabel">Delete Department</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+            </button>
+         </div>
+         <div class="modal-body">
+            <p>Are you sure you want to delete employee {{deleteDepartment?.departmentName}}?</p>
+            <div class="modal-footer">
+               <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+               <button (click)="onDeleteDepartment(deleteDepartment?.id)" class="btn btn-danger"
+                  data-dismiss="modal">Yes</button>
+            </div>
+         </div>
+      </div>
    </div>
 </div>

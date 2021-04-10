@@ -13,10 +13,12 @@ import {EmployeeService} from './employee.service';
 export class AppComponent implements OnInit{
 
   public employees:Employee[];
-  public departments:Department[];
   public editEmployee:Employee;
   public deleteEmployee:Employee;
+  public departments:Department[];
   public department:Department;
+  public editDepartment:Department;
+  public deleteDepartment:Department;
 
   constructor(private employeeService: EmployeeService,
               private departmentService:DepartmentService) { }
@@ -55,7 +57,7 @@ export class AppComponent implements OnInit{
 
   public onOpenModal(employee:Employee,mode:string):void{
 
-    const container=document.getElementById('main-container')
+    const container=document.getElementById('employee-container')
     const button=document.createElement('button');
     button.type='button';
     button.style.display='none';
@@ -135,5 +137,69 @@ export class AppComponent implements OnInit{
     }
   }
 
+  public onOpenDepartmentModal(department:Department,mode:string):void{
+
+    const container=document.getElementById('department-container')
+    const button=document.createElement('button');
+    button.type='button';
+    button.style.display='none';
+    button.setAttribute('data-toggle','modal');
+    if(mode==='add'){
+      button.setAttribute('data-target','#addDepartmentModal');
+    }
+    if(mode==='edit'){
+      this.editDepartment=department;
+      button.setAttribute('data-target','#updateDepartmentModal');
+    }
+    /*if(mode==='delete'){
+      this.editDepartment=department;
+      button.setAttribute('data-target','#deleteEmployeeModal');
+    }*/
+    container.appendChild(button);
+    button.click();
+  }
+
+  public onAddDepartment(addDepartmentForm:NgForm):void{
+
+    document.getElementById('add-department-form').click()
+    this.departmentService.addDepartment(addDepartmentForm.value).subscribe(
+      (response:Department)=>{
+        console.log(response);
+        this.getEmployees();
+        addDepartmentForm.reset();
+      },
+      (error:HttpErrorResponse)=>{
+        alert(error.message);
+        addDepartmentForm.reset();
+      }
+    ); 
+    
+  }
+
+  public onUpdateDepartment(department:Department):void{
+    this.departmentService.updateDepartment(department).subscribe(
+      (response:Department)=>{
+        console.log(response);
+        this.getEmployees();
+      },
+      (error:HttpErrorResponse)=>{
+        alert(error.message);
+      }
+    ); 
+    
+  }
+
+  public onDeleteDepartment(departmentId:number):void{
+    this.departmentService.deleteDepartment(departmentId).subscribe(
+      (response:void)=>{
+        console.log(response);
+        this.getEmployees();
+      },
+      (error:HttpErrorResponse)=>{
+        alert(error.message);
+      }
+    ); 
+    
+  }
 
 }
