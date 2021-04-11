@@ -57,7 +57,7 @@ export class AppComponent implements OnInit{
 
   public onOpenModal(employee:Employee,mode:string):void{
 
-    const container=document.getElementById('employee-container')
+    const container=document.getElementById('employee-container');
     const button=document.createElement('button');
     button.type='button';
     button.style.display='none';
@@ -139,7 +139,7 @@ export class AppComponent implements OnInit{
 
   public onOpenDepartmentModal(department:Department,mode:string):void{
 
-    const container=document.getElementById('department-container')
+    const container=document.getElementById('department-container');
     const button=document.createElement('button');
     button.type='button';
     button.style.display='none';
@@ -200,6 +200,43 @@ export class AppComponent implements OnInit{
       }
     ); 
     
+  }
+
+
+
+
+  public searchDepartment(key:string):void{
+    const results:Department[]=[];
+    for(const department of this.departments){
+      if(department.departmentName.toLocaleLowerCase().indexOf(key.toLocaleLowerCase())!==-1){
+        results.push(department);
+      }
+    }
+    this.departments=results;
+    if(results.length===0||!key){
+      this.getDepartments();
+    }
+  }
+
+
+  public showEmployees():void{
+    const departmentContainer=document.getElementById('department-container');
+    const employeeContainer=document.getElementById('employee-container');
+
+    departmentContainer.style.display="none";
+    employeeContainer.style.display="block";
+    this.getEmployees();
+
+  }
+
+  public showDepartments():void{
+    const departmentContainer=document.getElementById('department-container');
+    const employeeContainer=document.getElementById('employee-container');
+
+    departmentContainer.style.display="block";
+    employeeContainer.style.display="none";
+    this.getDepartments();
+
   }
 
 }
