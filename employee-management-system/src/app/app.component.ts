@@ -151,10 +151,10 @@ export class AppComponent implements OnInit{
       this.editDepartment=department;
       button.setAttribute('data-target','#updateDepartmentModal');
     }
-    /*if(mode==='delete'){
-      this.editDepartment=department;
-      button.setAttribute('data-target','#deleteEmployeeModal');
-    }*/
+    if(mode==='delete'){
+      this.deleteDepartment=department;
+      button.setAttribute('data-target','#deleteDepartmentModal');
+    }
     container.appendChild(button);
     button.click();
   }
@@ -165,7 +165,7 @@ export class AppComponent implements OnInit{
     this.departmentService.addDepartment(addDepartmentForm.value).subscribe(
       (response:Department)=>{
         console.log(response);
-        this.getEmployees();
+        this.getDepartments();
         addDepartmentForm.reset();
       },
       (error:HttpErrorResponse)=>{
@@ -180,7 +180,7 @@ export class AppComponent implements OnInit{
     this.departmentService.updateDepartment(department).subscribe(
       (response:Department)=>{
         console.log(response);
-        this.getEmployees();
+        this.getDepartments();
       },
       (error:HttpErrorResponse)=>{
         alert(error.message);
@@ -193,7 +193,7 @@ export class AppComponent implements OnInit{
     this.departmentService.deleteDepartment(departmentId).subscribe(
       (response:void)=>{
         console.log(response);
-        this.getEmployees();
+        this.getDepartments();
       },
       (error:HttpErrorResponse)=>{
         alert(error.message);

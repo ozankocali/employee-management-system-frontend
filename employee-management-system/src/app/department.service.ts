@@ -22,7 +22,7 @@ export class DepartmentService {
   }
 
   public addDepartment(department:Department):Observable<Department>{
-    return this.http.post<Department>(`${this.apiServerUrl}/departments/add`,department);
+    return this.http.post<Department>(`${this.apiServerUrl}/departments/save`,department);
   }
 
   public updateDepartment(department:Department):Observable<Department>{
@@ -30,7 +30,7 @@ export class DepartmentService {
   }
 
   public deleteDepartment(departmentId:number):Observable<void>{
-    return this.http.delete<void>(`${this.apiServerUrl}/departments/update/${departmentId}`);
+    return this.http.delete<void>(`${this.apiServerUrl}/departments/delete/${departmentId}`);
   }
 
 }

@@ -145,6 +145,7 @@
                   <input type="text" ngModel="{{editEmployee?.lastName}}" name="lastName" class="form-control"
                      id="lastName" placeholder="lastName">
                </div>
+               <input type="hidden" ngModel="{{editEmployee?.id}}" name="id" class="form-control" id="id">
                <div class="form-group">
                   <label for="department">Department</label>
                   <select class="form-control" id="department" name="department" ngModel={{editEmployee?.department}} required>
@@ -298,6 +299,7 @@
                   <input type="text" ngModel="{{editDepartment?.departmentName}}" name="departmentName" class="form-control"
                      id="departmentName" aria-describedby="emailHelp" placeholder="Department Name">
                </div>
+               <input type="hidden" ngModel="{{editDepartment?.id}}" name="id" class="form-control" id="id" >
                <div class="form-group">
                   <label for="maxSalary">Max Salary</label>
                   <input type="text" ngModel="{{editDepartment?.maxSalary}}" name="maxSalary" class="form-control"
