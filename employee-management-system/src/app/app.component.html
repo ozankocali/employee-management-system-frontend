@@ -1,3 +1,4 @@
+<!--Main navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
    <a class="navbar-brand" style="color:white;">Employee Manager</a>
    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01"
@@ -17,8 +18,9 @@
       </ul>
    </div>
 </nav>
+<!-- -->
 
-
+<!--Employee container  -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 <div class="container" id="employee-container">
    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="employee-nav">
@@ -60,10 +62,13 @@
             </ul>
             <div class="card-body">
                <div class="float-right btn-group btn-group-sm">
+                  <a (click)="onOpenModal(employee,'detail')" href="#" class="btn btn-success tooltips"
+               data-placement="top" data-toggle="tooltip" data-original-title="Delete"><i
+               class="fa fa-info" aria-hidden="true"></i></a>
                   <a (click)="onOpenModal(employee,'edit')" href="#" class="btn btn-primary tooltips"
                      data-placement="top" data-toggle="tooltip" data-original-title="Edit"><i class="fa fa-pencil"></i>
                   </a>
-                  <a (click)="onOpenModal(employee,'delete')" href="#" class="btn btn-secondary tooltips"
+                  <a (click)="onOpenModal(employee,'delete')" href="#" class="btn btn-danger tooltips"
                      data-placement="top" data-toggle="tooltip" data-original-title="Delete"><i
                         class="fa fa-times"></i></a>
                </div>
@@ -80,7 +85,9 @@
       </div>
    </div>
 </div>
+<!-- -->
 
+<!--Add Employee Modal -->
 <div class="modal fade" id="addEmployeeModal" tabindex="-1" role="dialog" aria-labelledby="addEmployeeModalLabel"
    aria-hidden="true">
    <div class="modal-dialog" role="document">
@@ -136,7 +143,9 @@
       </div>
    </div>
 </div>
+<!-- -->
 
+<!--Update Employee Modal -->
 <div class="modal fade" id="updateEmployeeModal" tabindex="-1" role="dialog" aria-labelledby="employeeEditModalLabel"
    aria-hidden="true">
    <div class="modal-dialog" role="document">
@@ -199,7 +208,9 @@
       </div>
    </div>
 </div>
+<!-- -->
 
+<!--Delete Employee Modal -->
 <div class="modal fade" id="deleteEmployeeModal" tabindex="-1" role="dialog" aria-labelledby="deleteModelLabel"
    aria-hidden="true">
    <div class="modal-dialog" role="document">
@@ -221,18 +232,66 @@
       </div>
    </div>
 </div>
+<!-- -->
 
-
-<div *ngIf="employees?.length == 0" class="col-lg-12 col-md-12 col-xl-12">
-   <div class="alert alert-info" role="alert">
-      <h4 class="alert-heading">NO EMPLOYEES!</h4>
-      <p>No Employees were found.</p>
+<!--Detail Employee Modal -->
+<div class="modal fade" id="detailEmployeeModal" tabindex="-1" role="dialog" aria-labelledby="detailModelLabel"
+   aria-hidden="true">
+   <div class="modal-dialog" role="document">
+      <div class="modal-content" style="background-color: #f5f5f5;">
+         <div class="modal-header">
+            <h5 class="modal-title" id="detailModelLabel">Employee Details</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+            </button>
+         </div>
+         <div class="modal-body">
+            <div style="background-color: #f5f5f5; margin-top: 20px;">
+               <div class="card m-b-30">
+                  <div class="card-body row">
+                     <div class="col-6">
+                        <a href=""><img src="{{detailEmployee?.profileImage?.url}}" alt="" class="img-fluid rounded-circle w-60"></a>
+                     </div>
+                     <div class="col-6 card-title align-self-center mb-0">
+                        <h5>{{detailEmployee?.firstName}}</h5>
+                        <h4>{{detailEmployee?.lastName}}</h4>
+                        <p class="m-0">{{detailEmployee?.department?.departmentName}}</p>
+                     </div>
+                  </div>
+                  <ul class="list-group list-group-flush">
+                     <li class="list-group-item"><i class="fa fa-birthday-cake float-right"></i>Age :<br><a
+                        href="#">{{detailEmployee?.age}}</a></li>
+                     <li class="list-group-item"><i class="fa fa-envelope float-right"></i>Email :<br><a
+                           href="#">{{detailEmployee?.email}}</a></li>
+                     <li class="list-group-item"><i class="fa fa-phone float-right"></i>Phone :<br><a
+                        href="#">{{detailEmployee?.phone}}</a></li>
+                     <li class="list-group-item"><i class="fa fa-money float-right"></i>Salary :<br><a
+                        href="#">{{detailEmployee?.salary}}</a></li>
+                  </ul>
+                  <div class="card-body">
+                     <ul class="social-links list-inline mb-0">
+                        <li class="list-inline-item"><a title="" data-placement="top" data-toggle="tooltip" class="tooltips"
+                              href="" data-original-title="Facebook"><i class="fa fa-facebook-f"></i></a></li>
+                        <li class="list-inline-item"><a title="" data-placement="top" data-toggle="tooltip" class="tooltips"
+                              href="" data-original-title="Twitter"><i class="fa fa-twitter"></i></a></li>
+                        <li class="list-inline-item"><a title="" data-placement="top" data-toggle="tooltip" class="tooltips"
+                              href="" data-original-title="Skype"><i class="fa fa-skype"></i></a></li>
+                     </ul>
+                  </div>
+               </div>
+            </div>
+            <div class="modal-footer">
+               <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+         </div>
+      </div>
    </div>
 </div>
+<!-- -->
 
-
+<!--Department Container -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
-<div class="container" id="department-container">
+<div class="container" id="department-container" style="display: none;">
    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="department-nav">
       <a class="navbar-brand" style="color:white;">Department Manager</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03"
@@ -276,7 +335,9 @@
         </div>
     </div>
 </div>
+<!-- -->
 
+<!--Add Department Modal -->
 <div class="modal fade" id="addDepartmentModal" tabindex="-1" role="dialog" aria-labelledby="addDepartmentModalLabel"
    aria-hidden="true">
    <div class="modal-dialog" role="document">
@@ -315,7 +376,9 @@
       </div>
    </div>
 </div>
+<!-- -->
 
+<!--Update Department Modal -->
 <div class="modal fade" id="updateDepartmentModal" tabindex="-1" role="dialog" aria-labelledby="departmentEditModalLabel"
    aria-hidden="true">
    <div class="modal-dialog" role="document">
@@ -354,7 +417,9 @@
       </div>
    </div>
 </div>
+<!-- -->
 
+<!--Delete Employee Modal -->
 <div class="modal fade" id="deleteDepartmentModal" tabindex="-1" role="dialog" aria-labelledby="deleteDepartmentModelLabel"
    aria-hidden="true">
    <div class="modal-dialog" role="document">
@@ -376,3 +441,12 @@
       </div>
    </div>
 </div>
+<!-- -->
+
+<!--Footer -->
+<footer class="footer">
+   <div class="container">
+       <span>All Rights Reserved 2021 @OzeeeSoftware </span>
+   </div>
+</footer>
+<!-- -->

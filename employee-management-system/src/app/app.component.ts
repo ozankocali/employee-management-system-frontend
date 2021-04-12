@@ -15,10 +15,13 @@ export class AppComponent implements OnInit{
   public employees:Employee[];
   public editEmployee:Employee;
   public deleteEmployee:Employee;
+  public employeesByDepartment:Employee[];
+  public detailEmployee:Employee;
   public departments:Department[];
   public department:Department;
   public editDepartment:Department;
   public deleteDepartment:Department;
+  
 
   constructor(private employeeService: EmployeeService,
               private departmentService:DepartmentService) { }
@@ -72,6 +75,10 @@ export class AppComponent implements OnInit{
     if(mode==='delete'){
       this.deleteEmployee=employee;
       button.setAttribute('data-target','#deleteEmployeeModal');
+    }
+    if(mode==='detail'){
+      this.detailEmployee=employee;
+      button.setAttribute('data-target','#detailEmployeeModal');
     }
     container.appendChild(button);
     button.click();
@@ -199,6 +206,19 @@ export class AppComponent implements OnInit{
         alert(error.message);
       }
     ); 
+    
+  }
+
+  public numberOfEmployees(departmentId:number):number{
+    this.employeeService.getEmployeesByDepartment(departmentId).subscribe(
+      (response:Employee[])=>{
+        this.employeesByDepartment=response;
+      },
+      (error:HttpErrorResponse)=>{
+        alert(error.message);
+      }
+    )
+    return this.employeesByDepartment.length;
     
   }
 

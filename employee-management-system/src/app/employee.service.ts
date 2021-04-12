@@ -18,6 +18,10 @@ export class EmployeeService {
     return this.http.get<Employee[]>(`${this.apiServerUrl}/employees`);
   }
 
+  public getEmployeesByDepartment(departmentId:number):Observable<Employee[]>{
+    return this.http.get<Employee[]>(`${this.apiServerUrl}/byDepartment/${departmentId}`);
+  }
+
   public addEmployee(employee:Employee):Observable<Employee>{
     return this.http.post<Employee>(`${this.apiServerUrl}/employees/save`,employee);
   }
@@ -29,6 +33,5 @@ export class EmployeeService {
   public deleteEmployee(employeeId:number):Observable<void>{
     return this.http.delete<void>(`${this.apiServerUrl}/employees/delete/${employeeId}`);
   }
-
 
 }
