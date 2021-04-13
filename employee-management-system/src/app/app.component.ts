@@ -209,21 +209,6 @@ export class AppComponent implements OnInit{
     
   }
 
-  public numberOfEmployees(departmentId:number):number{
-    this.employeeService.getEmployeesByDepartment(departmentId).subscribe(
-      (response:Employee[])=>{
-        this.employeesByDepartment=response;
-      },
-      (error:HttpErrorResponse)=>{
-        alert(error.message);
-      }
-    )
-    return this.employeesByDepartment.length;
-    
-  }
-
-
-
 
   public searchDepartment(key:string):void{
     const results:Department[]=[];

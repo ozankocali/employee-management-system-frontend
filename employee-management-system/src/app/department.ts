@@ -5,9 +5,14 @@ export interface Department{
 
     departmentName:string;
 
+    jobDescription:String;
+
     maxSalary:number;
 
     minSalary:number;
 
     employees:Employee[];
+
+    phone:String;
+
 }

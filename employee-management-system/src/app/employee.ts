@@ -18,5 +18,7 @@ export interface Employee {
 
     email:string
 
+    address:string;
+
     profileImage:ImageModel;
 }

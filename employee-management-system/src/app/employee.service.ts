@@ -19,7 +19,7 @@ export class EmployeeService {
   }
 
   public getEmployeesByDepartment(departmentId:number):Observable<Employee[]>{
-    return this.http.get<Employee[]>(`${this.apiServerUrl}/byDepartment/${departmentId}`);
+    return this.http.get<Employee[]>(`${this.apiServerUrl}/employees/byDepartment/${departmentId}`);
   }
 
   public addEmployee(employee:Employee):Observable<Employee>{
